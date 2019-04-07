@@ -51,8 +51,11 @@ function subscribeMiddleware ({dispatch, getState}) {
         const nextState = getState()
 
         forEach(path => {
-          const prev = getProp(path, prevState)
-          const next = getProp(path, nextState)
+          //const prev = getProp(path, prevState.get('form'))
+          //const next = getProp(path, nextState.get('form'))
+          const prev = prevState.getIn(path.split('.'));
+          const next = nextState.getIn(path.split('.'));
+
 
           if (prev !== next) {
             forEach(fn => dispatch(fn({path, prev, next})), subscriptions[path])
